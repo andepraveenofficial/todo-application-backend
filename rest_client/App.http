@@ -6,11 +6,29 @@ POST http://localhost:5000/add-todo
 Content-Type: application/json
 
 {
-    "item":"First Todo Testing",
-    "isChecked":true
+    "uniqueId":1,
+    "item":"Second Todo Testing",
+    "isChecked":false
 }
 
 
 ### 02 Get Todolist
 GET http://localhost:5000/todolist
 Content-Type: application/json
+
+### 03 Delete Single Todo Item
+DELETE http://localhost:5000/delete-todo 
+Content-Type: application/json
+
+{
+    "uniqueId":1
+}
+
+### 04 Update Single Todo Item
+PUT http://localhost:5000/edit-todo 
+Content-Type: application/json
+
+{
+    "uniqueId":1,
+    "item":"Item Updated"
+}

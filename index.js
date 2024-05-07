@@ -19,13 +19,20 @@ mongoose.connect(dbUrl).then(() => console.log("Database connected")
 ).catch((err) => console.log(err))
 
 /* -----> Create Schema <----- */
-const TodoSchema = mongoose.Schema({
-    item: String,
-    isChecked:Boolean
+const TodoSchema = mongoose.Schema(
+  {
+  item: { type: String, required: true, index: true },
+  isChecked: Boolean
+  }, 
+  {
+  // Define indexes here
+  indexes: [
+    { item: 1 }
+  ]
 })
 
 /* -----> Create Collection <----- */
-const TodoList = mongoose.model("todo-application", TodoSchema)
+const TodoList = mongoose.model("todoApplication", TodoSchema)
 
 /* -----> Routes <----- */
 // 00 Home
@@ -33,7 +40,6 @@ app.get("/", (request, response)=>{
     console.log("Home")
     response.send("Home")
 })
-
 
 // 01 Add Todo
 app.post("/add-todo", async (request, response)=>{

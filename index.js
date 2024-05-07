@@ -21,8 +21,9 @@ mongoose.connect(dbUrl).then(() => console.log("Database connected")
 /* -----> Create Schema <----- */
 const TodoSchema = mongoose.Schema(
   {
-  item: { type: String, required: true, index: true },
-  isChecked: Boolean
+    uniqueId:String,
+    item: { type: String, required: true, index: true },
+    isChecked: Boolean
   }, 
   {
   // Define indexes here
@@ -45,9 +46,10 @@ app.get("/", (request, response)=>{
 app.post("/add-todo", async (request, response)=>{
     console.log("Add Todo")
     // console.log(request.body)
-    const {item, isChecked} = request.body
+    const {uniqueId, item, isChecked} = request.body
     
     const newTodo = new TodoList({
+      uniqueId,
         item,
         isChecked
     })
@@ -66,7 +68,28 @@ app.get("/todolist", async (request, response)=>{
     const todoList = await TodoList.find()
     console.log(todoList)
     response.send(todoList)
+})
 
+
+// 03 Delete Single Todo Item
+app.delete("/delete-todo", async (request, response) => {
+  console.log("Delete Todo")
+  const {uniqueId} = request.body
+  console.log(uniqueId)
+
+  await TodoList.deleteOne({ uniqueId: uniqueId });
+  response.send("Successfully Todo Item Deleted")
+})
+
+
+// 04 Edit Single Todo Item
+app.put("/edit-todo", async (request, response) => {
+  console.log("Edit Todo")
+  const {uniqueId, item} = request.body
+  console.log(uniqueId)
+
+  await TodoList.updateOne({ uniqueId: uniqueId }, {item:item});
+  response.send("Successfully Todo Item Updated")
 })
 
 

@@ -1,0 +1,16 @@
+### 00 Home
+GET http://localhost:5000/
+
+### 01 Add Todo
+POST http://localhost:5000/add-todo
+Content-Type: application/json
+
+{
+    "item":"First Todo Testing",
+    "isChecked":true
+}
+
+
+### 02 Get Todolist
+GET http://localhost:5000/todolist
+Content-Type: application/json
